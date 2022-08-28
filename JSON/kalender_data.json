@@ -1,0 +1,102 @@
+{
+    "name":"2023",
+    "anz_tage":365,
+    "anz_monate":12,
+    "liste_tag_namen":
+    {
+        "1":"montag",
+        "2":"dinstag",
+        "3":"mittwoch",
+        "4":"donerstag",
+        "5":"freitag",
+        "6":"samstag",
+        "7":"sontag"
+    },
+    "list_monate":
+    [
+        {
+            "name":"januar",
+            "anz_days":31,
+            "tageszeitraum":[1, 31],
+            "anfangs_tag":"7",
+            "end_tag":"2"
+        },
+        {
+            "name":"febuar",
+            "anz_days":28,
+            "tageszeitraum":[32, 59],
+            "anfangs_tag":"3",
+            "end_tag":"2"
+        },
+        {
+            "name":"marz",
+            "anz_days":31,
+            "tageszeitraum":[60,90],
+            "anfangs_tag":"3",
+            "end_tag":"5"
+        },
+        {
+            "name":"april",
+            "anz_days":30,
+            "tageszeitraum":[91, 120],
+            "anfangs_tag":"6",
+            "end_tag":"7"
+        },
+        {
+            "name":"mai",
+            "anz_days":31,
+            "tageszeitraum":[121, 151],
+            "anfangs_tag":"1",
+            "end_tag":"3"
+        },        
+        {
+            "name":"juni",
+            "anz_days":30,
+            "tageszeitraum":[152, 181],
+            "anfangs_tag":"4",
+            "end_tag":"5"
+        },
+        {
+            "name":"juli",
+            "anz_days":31,
+            "tageszeitraum":[182, 212],
+            "anfangs_tag":"6",
+            "end_tag":"1"
+        },
+        {
+            "name":"august",
+            "anz_days":31,
+            "tageszeitraum":[213, 243],
+            "anfangs_tag":"2",
+            "end_tag":"4"
+        },
+        {
+            "name":"september",
+            "anz_days":30,
+            "tageszeitraum":[244, 273],
+            "anfangs_tag":"5",
+            "end_tag":"6"
+        },
+        {
+            "name":"oktober",
+            "anz_days":31,
+            "tageszeitraum":[274, 304],
+            "anfangs_tag":"7",
+            "end_tag":"2"
+        },
+        {
+            "name":"november",
+            "anz_days":30,
+            "tageszeitraum":[305, 334],
+            "anfangs_tag":"3",
+            "end_tag":"4"
+        },
+        {
+            "name":"dezember",
+            "anz_days":31,
+            "tageszeitraum":[335, 365],
+            "anfangs_tag":"5",
+            "end_tag":"7"
+        }
+    ]
+}
