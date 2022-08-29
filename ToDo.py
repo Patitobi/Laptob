@@ -1,5 +1,5 @@
 import json
-#import termine.py as T
+import termine as T
 
 class class_jahr:
     def __init__(self, name):
@@ -9,10 +9,10 @@ class class_jahr:
         while i < 12:
             self.ref_monate.append(
             class_monat(
-                    name=quary_json_data(list_monate=(i, "name")),
+                    name=quary_json_data(liste_monate=(i, "name")),
                     stelle=i,
-                    tagesraum=quary_json_data(list_monate=(i, "tageszeitraum")),
-                    anz_tage=quary_json_data(list_monate=(i, "anz_days")),
+                    tagesraum=quary_json_data(liste_monate=(i, "tageszeitraum")),
+                    anz_tage=quary_json_data(liste_monate=(i, "anz_days")),
                     ref_jahr=self
                 )
             )
@@ -30,7 +30,7 @@ class class_monat:
         i=0
         while i < self.anz_tage:
             if i == 0:
-                tag_name=int(quary_json_data(list_monate=(i, "anfangs_tag")))
+                tag_name=int(quary_json_data(liste_monate=(i, "anfangs_tag")))
             else:
                 tag_name+=1
                 if tag_name>7:
@@ -59,14 +59,14 @@ class class_termin:
     
 def quary_termine():
     try:
-        with open("JSON/kalender_data.json", "r") as data_file:
+        with open("JSON/termine_data.json", "r") as data_file:
             data = json.load(data_file)
             for monat in range(12): 
-                for_monat = data.get(monat)
-                for tag in range(quary_json_data(list_monate=(monat, "anz_days"))):
-                    for_monat.get(tag)
+                for_monat = data.get(str(monat))
+                for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
+                    tag_termine = for_monat.get(str(tag))
     except:
-        pass
+        print("quary_termine Error")
     finally:
         pass
     
@@ -109,6 +109,6 @@ def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
 
 if __name__=="__main__":
     ref_jahr = class_jahr(name=quary_json_data(jahr="name"))
-    #T.append_termin(3, 8, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
-    
+    T.append_termin(3, 8, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
     quary_termine()
+    
