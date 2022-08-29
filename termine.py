@@ -24,14 +24,14 @@ def append_termin(monat=int(), tag=int(), name=str(), von=None, bis=None, text=N
             data.get("data").pop("id")
             data.get("data").update({"id":id})
         data.get(str(monat)).get(str(tag)).update(
-                    {
+                    {{
                     "name":name,
                     "von":von,
                     "bis":bis,
                     "text":text,
                     "fabe":fabe,
                     "id":id
-                    }
+                    }}
                 )
     with open("ToDO\JSON\Termine_data.json", "w") as data_file:
         json.dump(data, data_file, indent=4)
