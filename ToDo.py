@@ -1,5 +1,5 @@
 import json
-import termine.py as T
+#import termine.py as T
 
 class class_jahr:
     def __init__(self, name):
@@ -75,7 +75,7 @@ def quary_termine():
 def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
     try:
         ero = None
-        with open("ToDO\JSON\termine_data.json", "r") as data_file:
+        with open("JSON/kalender_data.json", "r") as data_file:
                 data = json.load(data_file)
                 if jahr!=None:
                     result_1 = data.get(jahr)
@@ -109,5 +109,6 @@ def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
 
 if __name__=="__main__":
     ref_jahr = class_jahr(name=quary_json_data(jahr="name"))
-    T.append_termin(3, 8, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
+    #T.append_termin(3, 8, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
     
+    quary_termine()
