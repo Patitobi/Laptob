@@ -1,5 +1,9 @@
 import json
 
+#peter = Freund
+#hans = mober activ
+#gueter = opfer
+#andere mitarbeitere = pasive mober 
 ############################# RESETET ALLES ###############################################
 def reset():
     with open("ToDO\JSON\kalender_data.json", "r") as data_file:

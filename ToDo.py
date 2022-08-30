@@ -54,10 +54,15 @@ class class_tag:
         
 
 class class_termin:
-    def __init__(self):
-        pass
+    def __init__(self, name, id, von, bis, text, fabe):
+        self.name = name
+        self.id = id
+        self.von_bis = [von, bis]
+        self.text = text
+        self.fabe =fabe
     
 def quary_termine():
+    termine_list=list()
     try:
         with open("JSON/termine_data.json", "r") as data_file:
             data = json.load(data_file)
@@ -65,6 +70,18 @@ def quary_termine():
                 for_monat = data.get(str(monat))
                 for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
                     tag_termine = for_monat.get(str(tag))
+                    if tag_termine.keys() == None:
+                        pass
+                    else:
+                        for termin in tag_termine:
+                            termine_list.append(class_termin(
+                                name=termin.get("name"),
+                                id=termin.get("id"),
+                                von=termin.get("von"),
+                                bis=termin.get("bis"),
+                                text=termin.get("text"),
+                                fabe=termin.get("fabe")
+                            ))
     except:
         print("quary_termine Error")
     finally:
