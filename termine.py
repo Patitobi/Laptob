@@ -18,14 +18,14 @@ def reset():
         json.dump(main, data_file, indent=4)
         
 def append_termin(monat=int(), tag=int(), name=str(), von=None, bis=None, text=None, fabe=None, id=None):
-    with open("ToDO\JSON\Termine_data.json", "r") as data_file:
+    with open("JSON\Termine_data.json", "r") as data_file:
         data = json.load(data_file)
         if id == None:
             id = data.get("data").get("id") + 1
             data.get("data").pop("id")
             data.get("data").update({"id":id})
         data.get(str(monat)).get(str(tag)).update(
-                    {{
+                    {f"{id}":{
                     "name":name,
                     "von":von,
                     "bis":bis,
@@ -34,10 +34,9 @@ def append_termin(monat=int(), tag=int(), name=str(), von=None, bis=None, text=N
                     "id":id
                     }}
                 )
-    with open("ToDO\JSON\Termine_data.json", "w") as data_file:
+    with open("JSON\Termine_data.json", "w") as data_file:
         json.dump(data, data_file, indent=4)
 
-
-if __name__ == "__main__":
-    append_termin(1, 8, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
-    append_termin(7, 9, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
+# if __name__ == "__main__":
+#     append_termin(1, 8, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
+#     append_termin(7, 9, "Termin", von="0800", bis="1600", text="Das ist ein Termin")

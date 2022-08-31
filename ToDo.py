@@ -70,10 +70,11 @@ def quary_termine():
                 for_monat = data.get(str(monat))
                 for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
                     tag_termine = for_monat.get(str(tag))
-                    if tag_termine.keys() == None:
+                    if len(tag_termine.keys())<1:
                         pass
                     else:
-                        for termin in tag_termine:
+                        for id in tag_termine:
+                            termin = tag_termine.get(str(id))
                             termine_list.append(class_termin(
                                 name=termin.get("name"),
                                 id=termin.get("id"),
