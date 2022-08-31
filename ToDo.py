@@ -1,5 +1,8 @@
 import json
+from pickle import APPEND
+from typing import Text
 import termine as T
+import tkinter as tk
 
 class class_jahr:
     def __init__(self, name):
@@ -26,6 +29,7 @@ class class_monat:
         self.anz_tage=anz_tage
         self.tagesraum=tagesraum
         self.ref_tage=list()
+        self.anz_termine=anz_termine_monat(self.stelle)
         
         i=0
         while i < self.anz_tage:
@@ -37,6 +41,7 @@ class class_monat:
                     tag_name=1
             self.ref_tage.append(
                 class_tag(
+                    monat=self.stelle,
                     stelle=i,
                     name=quary_json_data(liste_tag_namen=tag_name),
                     jahrestag=self.tagesraum[0] + i,
@@ -45,51 +50,86 @@ class class_monat:
             i+=1
         
 class class_tag:
-    def __init__(self, stelle=int(), name=str(), jahrestag=int()):
+    def __init__(self, stelle=int(), name=str(), jahrestag=int(), monat=int()):
         self.stelle = stelle
         self.name=name
         self.jahrestag=jahrestag
         self.termin_anzahl=None
-        
+        self.monat=monat
+        self.termin_list=quary_termine(tag=self.stelle, monat=self.monat)
+            
         
 
 class class_termin:
-    def __init__(self, name, id, von, bis, text, fabe):
+    def __init__(self, name, id, von, bis, text, fabe, tag, monat):
         self.name = name
         self.id = id
         self.von_bis = [von, bis]
         self.text = text
         self.fabe =fabe
+        self.tag=tag
+        self.monat=monat
+        
+class display_monate:
+    def __init__(self, monate_ref_list=None):
+        #self.monate_ref_list=monate_ref_list
+        self.frame_list=list()
+        
+        for monat in range(12):
+            frame = tk.LabelFrame(root)
+            
+            monats_name=tk.Label(frame, Text=quary_json_data(liste_monate=(monat, "name")))
+            monats_nummer=tk.Label(frame, text=f"{monat+1}")
+            anz_termine=tk.Label(frame, text="Anzahl Termine:")
+            anz_termine_num=tk.Label(frame, text="")
+            
+            self.frame_list.append(frame)
+        
+    def dislpay(self):
+        pass
     
-def quary_termine():
+def anz_termine_monat(monat):
+    anz_termine=int()
+    with open("JSON/termine_data.json", "r") as data_file:
+        data = json.load(data_file)
+        data_monat = data.get(str(monat))
+        for tag in range(quary_json_data(liste_monate=(int(monat),"anz_days"))):
+            if len(data_monat.get(tag).keys()) < 1:
+                anz_termine+=len(data_monat.get(tag).keys())
+    return anz_termine 
+    
+    
+        
+# such nach terminen an einem tag und gib diese in einem objeckt wieder
+def quary_termine(monat,tag):
     termine_list=list()
     try:
         with open("JSON/termine_data.json", "r") as data_file:
             data = json.load(data_file)
-            for monat in range(12): 
-                for_monat = data.get(str(monat))
-                for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
-                    tag_termine = for_monat.get(str(tag))
-                    if len(tag_termine.keys())<1:
-                        pass
-                    else:
-                        for id in tag_termine:
-                            termin = tag_termine.get(str(id))
-                            termine_list.append(class_termin(
-                                name=termin.get("name"),
-                                id=termin.get("id"),
-                                von=termin.get("von"),
-                                bis=termin.get("bis"),
-                                text=termin.get("text"),
-                                fabe=termin.get("fabe")
-                            ))
+            tag = data.get(str(monat)).get(str(tag))
+            if len(tag.keys()) < 1:
+                pass
+            else:
+                for key in tag.keys():
+                    termine_list.append(class_termin(
+                        name=key.get("name"),
+                        id=key.get("id"),
+                        von=key.get("von"),
+                        bis=key.get("bis"),
+                        text=key.get("text"),
+                        fabe=key.get("fabe")
+                        ))
     except:
-        print("quary_termine Error")
+        print("datei eror: termine_data.json")
     finally:
-        pass
+        return termine_list
     
     
-    
+# sucht nach daten zum kalender
+#jahr für infos zum ganzen jahr#
+#liste_tag_namen macht aus 1-7 namen wie Montag
+#liste_monate git infos über ein bestimten monat
+#wird in tupel angegeben (monat in int, name von para)
 def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
     try:
         ero = None
@@ -127,6 +167,12 @@ def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
 
 if __name__=="__main__":
     ref_jahr = class_jahr(name=quary_json_data(jahr="name"))
-    T.append_termin(3, 8, "Termin", von="0800", bis="1600", text="Das ist ein Termin")
-    quary_termine()
-    
+    gui=False
+    if gui:
+        root = tk.Tk()
+        root.title("Kalender 2022")
+        
+        display_monate()
+        display_monate.dislpay()
+        
+        root.mainloop()
