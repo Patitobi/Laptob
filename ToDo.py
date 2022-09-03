@@ -1,6 +1,4 @@
 import json
-from pickle import APPEND
-from typing import Text
 import termine as T
 import tkinter as tk
 
@@ -82,11 +80,17 @@ class display_monate:
             monats_nummer=tk.Label(frame, text=f"{monat+1}")
             anz_termine=tk.Label(frame, text="Anzahl Termine:")
             anz_termine_num=tk.Label(frame, text="")
+
+            anz_termine.grid(x=1, y=0)
             
+
             self.frame_list.append(frame)
+
+        
         
     def dislpay(self):
-        pass
+        for monat in self.frame_list:
+            monat.grid()
     
 def anz_termine_monat(monat):
     anz_termine=int()
@@ -167,7 +171,7 @@ def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
 
 if __name__=="__main__":
     ref_jahr = class_jahr(name=quary_json_data(jahr="name"))
-    gui=False
+    gui=True
     if gui:
         root = tk.Tk()
         root.title("Kalender 2022")
