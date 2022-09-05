@@ -74,8 +74,7 @@ class class_termin:
         self.monat=monat
         
 class display_monate:
-    def __init__(self, monate_ref_list=None):
-        #self.monate_ref_list=monate_ref_list
+    def __init__(self):
         self.frame_list=list()
         
         for monat in range(12):
