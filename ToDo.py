@@ -132,6 +132,17 @@ class display_monate:
         #bewegt sich nicht mit und macht probleme wenn die rechte seite verändert wird
         #self.total_frame.grid(row=0, column=0, padx=400, pady=50)
         self.total_frame.pack()
+        
+class display_tag:
+    def __ini__(self):
+        self.frame_list=list()
+        
+        for monat in range(12):
+            monat_frame=tk.Frame(root)
+            self.frame_list.append(monat_frame)
+            for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
+                pass
+                
             
     
 def anz_termine_monat(monat=int()):
@@ -223,5 +234,7 @@ if __name__=="__main__":
         
         monat_display=display_monate()
         monat_display.dislpay()
+        
+        tag_display=display_tag()
         
         root.mainloop()
