@@ -18,6 +18,9 @@ class class_jahr:
                 )
             )
             i+=1
+        
+    def give_monat_ref(self, monat=int()):
+        return self.ref_monate[monat]
              
 class class_monat:
     def __init__(self, name=str(), stelle=int(), tagesraum=list(), anz_tage=int(), ref_jahr=object()):
@@ -27,7 +30,7 @@ class class_monat:
         self.anz_tage=anz_tage
         self.tagesraum=tagesraum
         self.ref_tage=list()
-        #self.anz_termine=anz_termine_monat(self.stelle)
+        self.anz_termine=anz_termine_monat(self.stelle)
         
         i=0
         while i < self.anz_tage:
@@ -46,6 +49,8 @@ class class_monat:
                 )
             )
             i+=1
+    def give_anz_termine(self):
+        return self.anz_termine
         
 class class_tag:
     def __init__(self, stelle=int(), name=str(), jahrestag=int(), monat=int()):
@@ -54,7 +59,7 @@ class class_tag:
         self.jahrestag=jahrestag
         self.termin_anzahl=None
         self.monat=monat
-        self.termin_list=quary_termine(tag=self.stelle, monat=self.monat)
+        self.termin_list=quary_termine(monat=self.monat, tag=self.stelle)
             
         
 
@@ -76,12 +81,10 @@ class display_monate:
         for monat in range(12):
             frame = tk.LabelFrame(root)
             
-            quary_json_data(liste_monate=(monat, "name"))
-
-            monats_name=tk.Label(frame, text="xxxxxxxx")
+            monats_name=tk.Label(frame, text=quary_json_data(liste_monate=(monat, "name")))
             monats_num=tk.Label(frame, text=f"{monat+1}")
             anz_termine=tk.Label(frame, text="Anzahl Termine:")
-            anz_termine_num=tk.Label(frame, text="2")
+            anz_termine_num=tk.Label(frame, text=ref_jahr.give_monat_ref(monat).give_anz_termine())
 
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
@@ -103,14 +106,13 @@ class display_monate:
             x+=1
             
     
-def anz_termine_monat(monat):
-    anz_termine=int()
+def anz_termine_monat(monat=int()):
+    anz_termine=0
     with open("JSON/termine_data.json", "r") as data_file:
         data = json.load(data_file)
-        data_monat = data.get(str(monat))
-        for tag in range(quary_json_data(liste_monate=(int(monat),"anz_days"))):
-            if len(data_monat.get(tag).keys()) < 1:
-                anz_termine+=len(data_monat.get(tag).keys())
+        data_monat = data.get("data")
+        if data_monat.get(str(monat)) < 1:
+            anz_termine=data_monat.get(str(monat))
     return anz_termine 
     
     
