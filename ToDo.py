@@ -49,6 +49,7 @@ class class_monat:
                 )
             )
             i+=1
+            
     def give_anz_termine(self):
         return self.anz_termine
         
@@ -76,33 +77,61 @@ class class_termin:
 class display_monate:
     def __init__(self):
         self.frame_list=list()
+        self.termine_list=list()
+        self.total_frame=tk.Frame(root)
         
         for monat in range(12):
-            frame = tk.LabelFrame(root)
+            frame = tk.LabelFrame(self.total_frame)
+            top_frame=tk.Frame(frame, relief="solid", borderwidth=2)
             
-            monats_name=tk.Label(frame, text=quary_json_data(liste_monate=(monat, "name")))
-            monats_num=tk.Label(frame, text=f"{monat+1}")
+            monats_name=tk.Label(top_frame, text=quary_json_data(liste_monate=(monat, "name")), width=20, height=2)
+            monats_num=tk.Label(top_frame, text=f"{monat+1}",width=3, height=2)
+            
             anz_termine=tk.Label(frame, text="Anzahl Termine:")
             anz_termine_num=tk.Label(frame, text=ref_jahr.give_monat_ref(monat).give_anz_termine())
+            
+            for x in range(2, 11):
+                termine_show=tk.Label(frame, text="xxx")
+                termine_show_num=tk.Label(frame, text=f"{x-1}.")
+                
+                self.termine_list.append((termine_show, termine_show_num))
+                
+                termine_show.grid(column=0, row=x)
+                termine_show_num.grid(column=1, row=x)
+            
+            ########################
+            # Hier gehts weiter!!! #
+            ########################
+            
+            ansehen=tk.Button(frame, text="Ansehen", command=None)
 
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
+            
+            top_frame.grid(column=0 , row=0, columnspan=2)
+            
             anz_termine.grid(column=0, row=1)
             anz_termine_num.grid(column=1, row=1)
-
+            
             self.frame_list.append(frame)
 
-        
+            x=1
+            y=0
+            for frame in self.frame_list:
+                frame.grid(column=x, row=y, padx=20, pady=20)
+                if x%4==0 and x!=1:
+                    y+=1
+                    x=0
+                x+=1
+                
+            ansehen.grid(column=0, row=11, columnspan=2)
+                
+            
         
     def dislpay(self):
-        x=1
-        y=0
-        for frame in self.frame_list:
-            frame.grid(column=x, row=y)
-            if x%4==0 and x!=1:
-                y+=1
-                x=0
-            x+=1
+        #bewegt sich nicht mit und macht probleme wenn die rechte seite verändert wird
+        #self.total_frame.grid(row=0, column=0, padx=400, pady=50)
+        self.total_frame.pack()
             
     
 def anz_termine_monat(monat=int()):
@@ -110,7 +139,7 @@ def anz_termine_monat(monat=int()):
     with open("JSON/termine_data.json", "r") as data_file:
         data = json.load(data_file)
         data_monat = data.get("data")
-        if data_monat.get(str(monat)) < 1:
+        if data_monat.get(str(monat)) > 0:
             anz_termine=data_monat.get(str(monat))
     return anz_termine 
     
@@ -127,13 +156,16 @@ def quary_termine(monat,tag):
                 pass
             else:
                 for key in tag.keys():
+                    termine=tag.get(key)
                     termine_list.append(class_termin(
-                        name=key.get("name"),
-                        id=key.get("id"),
-                        von=key.get("von"),
-                        bis=key.get("bis"),
-                        text=key.get("text"),
-                        fabe=key.get("fabe")
+                        name=termine.get("name"),
+                        id=termine.get("id"),
+                        von=termine.get("von"),
+                        bis=termine.get("bis"),
+                        text=termine.get("text"),
+                        fabe=termine.get("fabe"),
+                        tag=int(key),
+                        monat=monat
                         ))
     except:
         print("datei eror: termine_data.json")
