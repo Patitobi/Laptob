@@ -208,7 +208,7 @@ def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
                     else:
                         return result_3
     except:
-        print("ToDO\JSON\termine_data.json kommte nicht geöfnet werden")
+        print("ToDO\JSON\Termine_data.json kommte nicht geöfnet werden")
     finally:
         if ero != None:
             print(ero)
