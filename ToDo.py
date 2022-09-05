@@ -27,7 +27,7 @@ class class_monat:
         self.anz_tage=anz_tage
         self.tagesraum=tagesraum
         self.ref_tage=list()
-        self.anz_termine=anz_termine_monat(self.stelle)
+        #self.anz_termine=anz_termine_monat(self.stelle)
         
         i=0
         while i < self.anz_tage:
@@ -76,21 +76,32 @@ class display_monate:
         for monat in range(12):
             frame = tk.LabelFrame(root)
             
-            monats_name=tk.Label(frame, Text=quary_json_data(liste_monate=(monat, "name")))
-            monats_nummer=tk.Label(frame, text=f"{monat+1}")
-            anz_termine=tk.Label(frame, text="Anzahl Termine:")
-            anz_termine_num=tk.Label(frame, text="")
+            quary_json_data(liste_monate=(monat, "name"))
 
-            anz_termine.grid(x=1, y=0)
-            
+            monats_name=tk.Label(frame, text="xxxxxxxx")
+            monats_num=tk.Label(frame, text=f"{monat+1}")
+            anz_termine=tk.Label(frame, text="Anzahl Termine:")
+            anz_termine_num=tk.Label(frame, text="2")
+
+            monats_name.grid(column=0, row=0)
+            monats_num.grid(column=1, row=0)
+            anz_termine.grid(column=0, row=1)
+            anz_termine_num.grid(column=1, row=1)
 
             self.frame_list.append(frame)
 
         
         
     def dislpay(self):
-        for monat in self.frame_list:
-            monat.grid()
+        x=1
+        y=0
+        for frame in self.frame_list:
+            frame.grid(column=x, row=y)
+            if x%4==0 and x!=1:
+                y+=1
+                x=0
+            x+=1
+            
     
 def anz_termine_monat(monat):
     anz_termine=int()
@@ -175,8 +186,9 @@ if __name__=="__main__":
     if gui:
         root = tk.Tk()
         root.title("Kalender 2022")
+        root.geometry("1920x1080")
         
-        display_monate()
-        display_monate.dislpay()
+        monat_display=display_monate()
+        monat_display.dislpay()
         
         root.mainloop()
