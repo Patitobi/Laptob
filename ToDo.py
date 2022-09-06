@@ -102,7 +102,7 @@ class display_monate:
                 termine_show.grid(column=0, row=x)
                 termine_show_num.grid(column=1, row=x)
             
-            ansehen=tk.Button(frame, text="Ansehen", command=lambda:[self.display_none(), tag_display.display_active()])
+            ansehen=tk.Button(frame, text="Ansehen", command=lambda:[self.display_none(), tag_display.display_active(monat=monat)])
 
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
@@ -135,14 +135,17 @@ class display_monate:
     def display_none(self):
         self.total_frame.pack_forget()
     
-    ######################## |
-    # Hier gehts weiter!!! # |
-    ########################\/
+    ######################## 
+    # Hier gehts weiter!!! # 
+    ########################
     
 class display_tag:
-    def __ini__(self):
+    
+    def __init__(self):
+        
         self.frame_list=list()
         self.active_display=int()
+        
         self.display_lode()
         
         
@@ -152,33 +155,42 @@ class display_tag:
                 
                 wochentag=quary_json_data(liste_monate=(monat, "anfangs_tag"))
                 
-                for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
+                tag_x=0
+                tag_y=0
+                
+                for loop_tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
                     
-                    tag_frame=tk.Frame(monat_frame)
+                    tag_frame=tk.Frame(monat_frame, border=2, relief="groove")
                     
-                    top_frame=tk.Frame(tag_frame)
-                    name=tk.Label(top_frame, text=quary_json_data(liste_tag_namen=wochentag))
-                    datum=tk.Label(top_frame, text=tag+1)
+                    name=tk.Label(tag_frame, text=quary_json_data(liste_tag_namen=wochentag))
+                    datum=tk.Label(tag_frame, text=loop_tag+1)
                     
-                    name.grid(column=0 ,row=0)
-                    datum.grid(column=1, row=0)
-                    top_frame.grid(column=0, row=0, columnspan=3)
+                    name.grid(column=0, row=0)
+                    datum.grid(column=2, row=0)
                     
-                    x=0
-                    for termin in quary_termine(monat=monat, tag=tag):
-                        termin_name=tk.Frame(tag_frame, text=termin.name)
-                        termin_von=tk.Label(tag_frame, text=termin.von)
-                        termin_bis=tk.Label(tag_frame, text=termin.bis)
+                    x=1
+                    if len(quary_termine(monat=monat, tag=loop_tag))>0:
                         
-                        termin_name.grid(column=0, row=x)
-                        termin_von.grid(column=1, row=x)
-                        termin_bis.grid(column=2, row=x)
+                        for termin in quary_termine(monat=monat, tag=loop_tag):
+                            
+                            termin_name=tk.Label(tag_frame, text=termin.name)
+                            termin_von=tk.Label(tag_frame, text=termin.von_bis[0])
+                            termin_bis=tk.Label(tag_frame, text=termin.von_bis[1])
+                            
+                            termin_name.grid(column=0, row=x)
+                            termin_von.grid(column=1, row=x)
+                            termin_bis.grid(column=2, row=x)
 
-                        x+=1
+                            x+=1
+                    tag_frame.grid(column=tag_y, row=tag_x, pady=15, padx=20)
                     
                     wochentag+=1
                     if wochentag>7:
                         wochentag=1
+                    tag_y+=1
+                    if tag_y>6:
+                        tag_y=0
+                        tag_x+=1
                         
                 self.frame_list.append(monat_frame)
             
@@ -315,11 +327,7 @@ if __name__=="__main__":
         root.geometry("1920x1080")
         
         monat_display=display_monate()
+        tag_display = display_tag()
         monat_display.dislpay_active()
-        
-        #packt wiedeer weg
-        #monat_display.display_none()
-        
-        tag_display=display_tag()
         
         root.mainloop()

@@ -18,85 +18,85 @@
             "name":"Januar",
             "anz_days":31,
             "tageszeitraum":[1, 31],
-            "anfangs_tag":"7",
-            "end_tag":"2"
+            "anfangs_tag":7,
+            "end_tag":2
         },
         {
-            "name":"Februar",
+            "name":"Febuar",
             "anz_days":28,
             "tageszeitraum":[32, 59],
-            "anfangs_tag":"3",
-            "end_tag":"2"
+            "anfangs_tag":3,
+            "end_tag":2
         },
         {
             "name":"Marz",
             "anz_days":31,
             "tageszeitraum":[60,90],
-            "anfangs_tag":"3",
-            "end_tag":"5"
+            "anfangs_tag":3,
+            "end_tag":5
         },
         {
             "name":"April",
             "anz_days":30,
             "tageszeitraum":[91, 120],
-            "anfangs_tag":"6",
-            "end_tag":"7"
+            "anfangs_tag":6,
+            "end_tag":7
         },
         {
             "name":"Mai",
             "anz_days":31,
             "tageszeitraum":[121, 151],
-            "anfangs_tag":"1",
-            "end_tag":"3"
+            "anfangs_tag":1,
+            "end_tag":3
         },        
         {
             "name":"Juni",
             "anz_days":30,
             "tageszeitraum":[152, 181],
-            "anfangs_tag":"4",
-            "end_tag":"5"
+            "anfangs_tag":4,
+            "end_tag":5
         },
         {
             "name":"Juli",
             "anz_days":31,
             "tageszeitraum":[182, 212],
-            "anfangs_tag":"6",
-            "end_tag":"1"
+            "anfangs_tag":6,
+            "end_tag":1
         },
         {
             "name":"August",
             "anz_days":31,
             "tageszeitraum":[213, 243],
-            "anfangs_tag":"2",
-            "end_tag":"4"
+            "anfangs_tag":2,
+            "end_tag":4
         },
         {
             "name":"September",
             "anz_days":30,
             "tageszeitraum":[244, 273],
-            "anfangs_tag":"5",
-            "end_tag":"6"
+            "anfangs_tag":5,
+            "end_tag":6
         },
         {
             "name":"Oktober",
             "anz_days":31,
             "tageszeitraum":[274, 304],
-            "anfangs_tag":"7",
-            "end_tag":"2"
+            "anfangs_tag":7,
+            "end_tag":2
         },
         {
             "name":"November",
             "anz_days":30,
             "tageszeitraum":[305, 334],
-            "anfangs_tag":"3",
-            "end_tag":"4"
+            "anfangs_tag":3,
+            "end_tag":4
         },
         {
             "name":"Dezember",
             "anz_days":31,
             "tageszeitraum":[335, 365],
-            "anfangs_tag":"5",
-            "end_tag":"7"
+            "anfangs_tag":5,
+            "end_tag":7
         }
     ]
 }
