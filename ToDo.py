@@ -102,10 +102,6 @@ class display_monate:
                 termine_show.grid(column=0, row=x)
                 termine_show_num.grid(column=1, row=x)
             
-            ########################
-            # Hier gehts weiter!!! #
-            ########################
-            
             ansehen=tk.Button(frame, text="Ansehen", command=lambda:[self.display_none(), tag_display.display_active()])
 
             monats_name.grid(column=0, row=0)
@@ -138,25 +134,60 @@ class display_monate:
 
     def display_none(self):
         self.total_frame.pack_forget()
-        
+    
+    ######################## |
+    # Hier gehts weiter!!! # |
+    ########################\/
+    
 class display_tag:
     def __ini__(self):
         self.frame_list=list()
+        self.active_display=int()
         self.display_lode()
         
         
     def display_lode(self): 
         for monat in range(12):
                 monat_frame=tk.Frame(root)
-                self.frame_list.append(monat_frame)
+                
+                wochentag=quary_json_data(liste_monate=(monat, "anfangs_tag"))
+                
                 for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
-                    pass
+                    
+                    tag_frame=tk.Frame(monat_frame)
+                    
+                    top_frame=tk.Frame(tag_frame)
+                    name=tk.Label(top_frame, text=quary_json_data(liste_tag_namen=wochentag))
+                    datum=tk.Label(top_frame, text=tag+1)
+                    
+                    name.grid(column=0 ,row=0)
+                    datum.grid(column=1, row=0)
+                    top_frame.grid(column=0, row=0, columnspan=3)
+                    
+                    x=0
+                    for termin in quary_termine(monat=monat, tag=tag):
+                        termin_name=tk.Frame(tag_frame, text=termin.name)
+                        termin_von=tk.Label(tag_frame, text=termin.von)
+                        termin_bis=tk.Label(tag_frame, text=termin.bis)
+                        
+                        termin_name.grid(column=0, row=x)
+                        termin_von.grid(column=1, row=x)
+                        termin_bis.grid(column=2, row=x)
+
+                        x+=1
+                    
+                    wochentag+=1
+                    if wochentag>7:
+                        wochentag=1
+                        
+                self.frame_list.append(monat_frame)
             
-    def display_active(self):
-        pass
+    def display_active(self, monat=int()):
+        self.active_display=monat
+        self.frame_list[monat].pack()
     
     def display_none(self):
-        pass
+        self.frame_list[self.active_display].pack_forget()
                 
             
     
@@ -172,7 +203,7 @@ def anz_termine_monat(monat=int()):
     
         
 # such nach terminen an einem tag und gib diese in einem objeckt wieder
-def quary_termine(monat,tag):
+def quary_termine(monat=int(), tag=int()):
     termine_list=list()
     try:
         with open("JSON/termine_data.json", "r") as data_file:
