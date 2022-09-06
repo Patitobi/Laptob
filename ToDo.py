@@ -1,5 +1,4 @@
 import json
-import termine as T
 import tkinter as tk
 
 class class_jahr:
@@ -80,6 +79,10 @@ class display_monate:
         self.termine_list=list()
         self.total_frame=tk.Frame(root)
         
+        self.display_lode()
+        
+    def display_lode(self):
+        
         for monat in range(12):
             frame = tk.LabelFrame(self.total_frame)
             top_frame=tk.Frame(frame, relief="solid", borderwidth=2)
@@ -103,7 +106,7 @@ class display_monate:
             # Hier gehts weiter!!! #
             ########################
             
-            ansehen=tk.Button(frame, text="Ansehen", command=None)
+            ansehen=tk.Button(frame, text="Ansehen", command=lambda:[self.display_none(), tag_display.display_active()])
 
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
@@ -139,12 +142,21 @@ class display_monate:
 class display_tag:
     def __ini__(self):
         self.frame_list=list()
+        self.display_lode()
         
+        
+    def display_lode(self): 
         for monat in range(12):
-            monat_frame=tk.Frame(root)
-            self.frame_list.append(monat_frame)
-            for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
-                pass
+                monat_frame=tk.Frame(root)
+                self.frame_list.append(monat_frame)
+                for tag in range(quary_json_data(liste_monate=(monat, "anz_days"))):
+                    pass
+            
+    def display_active(self):
+        pass
+    
+    def display_none(self):
+        pass
                 
             
     
