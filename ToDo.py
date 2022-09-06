@@ -128,10 +128,13 @@ class display_monate:
                 
             
         
-    def dislpay(self):
+    def dislpay_active(self):
         #bewegt sich nicht mit und macht probleme wenn die rechte seite verändert wird
         #self.total_frame.grid(row=0, column=0, padx=400, pady=50)
         self.total_frame.pack()
+
+    def display_none(self):
+        self.total_frame.pack_forget()
         
 class display_tag:
     def __ini__(self):
@@ -269,7 +272,10 @@ if __name__=="__main__":
         root.geometry("1920x1080")
         
         monat_display=display_monate()
-        monat_display.dislpay()
+        monat_display.dislpay_active()
+        
+        #packt wiedeer weg
+        #monat_display.display_none()
         
         tag_display=display_tag()
         
