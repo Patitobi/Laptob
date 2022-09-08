@@ -77,6 +77,7 @@ class display_monate:
     def __init__(self):
         self.frame_list=list()
         self.termine_list=list()
+        self.button_list=list()
         self.total_frame=tk.Frame(root)
         
         self.display_lode()
@@ -102,7 +103,7 @@ class display_monate:
                 termine_show.grid(column=0, row=x)
                 termine_show_num.grid(column=1, row=x)
             
-            ansehen=tk.Button(frame, text="Ansehen", command=lambda:[self.display_none(), tag_display.display_active(monat=monat)])
+            self.button_list.append(tk.Button(frame, text="Ansehen", command=lambda:[self.display_none(), tag_display.display_active(monat=monat)]))
 
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
@@ -114,16 +115,18 @@ class display_monate:
             
             self.frame_list.append(frame)
 
-            x=1
-            y=0
-            for frame in self.frame_list:
-                frame.grid(column=x, row=y, padx=20, pady=20)
-                if x%4==0 and x!=1:
-                    y+=1
-                    x=0
-                x+=1
+        x=1
+        y=0
+        z=0
+        for frame in self.frame_list:
+            frame.grid(column=x, row=y, padx=20, pady=20)
+            if x%4==0 and x!=1:
+                y+=1
+                x=0
+            x+=1
+            z+=1
                 
-            ansehen.grid(column=0, row=11, columnspan=2)
+            self.button_list[z].grid(column=0, row=11, columnspan=2)
                 
             
         
@@ -193,6 +196,8 @@ class display_tag:
                         tag_x+=1
                         
                 self.frame_list.append(monat_frame)
+        back=tk.Button(monat_frame,text="Zurück", command=lambda:[self.display_none(), monat_display.dislpay_active()])
+        back.grid(row=10, column=0)
             
     def display_active(self, monat=int()):
         self.active_display=monat
