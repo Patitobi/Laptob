@@ -117,7 +117,7 @@ class display_monate:
 
         x=1
         y=0
-        z=0
+        z=-1
         for frame in self.frame_list:
             frame.grid(column=x, row=y, padx=20, pady=20)
             if x%4==0 and x!=1:
