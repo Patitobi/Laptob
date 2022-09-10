@@ -100,20 +100,21 @@ class display_monate:
             anz_termine_num=tk.Label(frame, text=ref_jahr.give_monat_ref(monat).give_anz_termine())
             
             termine_monat=quary_termine_monat(monat_int=monat)
-            
+            z=0
             for x in range(2, 11):
-                termine_show=tk.Label(frame, text=termine_monat.name)
-                termine_show_num=tk.Label(frame, text=f"{x-1}.")
+                termine_show=tk.Label(frame, text=termine_monat[z].name)
+                termine_show_num=tk.Label(frame, text=f"{termine_monat[z].tag}.")
                 
                 self.termine_list.append((termine_show, termine_show_num))
                 
                 termine_show.grid(column=0, row=x)
                 termine_show_num.grid(column=1, row=x)
+                z+=1
                 
-            self.button_list.append(tk.Button(frame ,text="Anzeigen", command=lambda:[tag_display.display_active(monat=monat), self.display_none()]))
+            #self.button_list.append(tk.Button(frame ,text="Anzeigen", command=lambda:[tag_display.display_active(monat=monat), self.display_none()]))
             
             
-            #self.button_creat(monat, frame)
+            self.button_creat(monat, frame)
             
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
@@ -352,9 +353,12 @@ def quary_termine_monat(monat_int=int()):
         with open("JSON/termine_data.json", "r") as data_file:
             data = json.load(data_file)
             monat=data.get(str(monat_int))
-            for key in monat.keys():
-                if len(monat.get(key).keys())>0:
-                    for termine in monat.get(key).keys():
+            for key_mon in monat.keys():
+                
+                if len(monat.get(key_mon).keys())>0:
+                    
+                    for key_tag in monat.get(key_mon).keys():
+                        termine=monat.get(key_mon).get(key_tag)
                         return_list.append(
                             class_termin(
                                 name=termine.get("name"),
@@ -363,10 +367,11 @@ def quary_termine_monat(monat_int=int()):
                                 bis=termine.get("bis"),
                                 text=termine.get("text"),
                                 fabe=termine.get("fabe"),
-                                tag=int(key),
-                                monat=monat
+                                tag=int(key_mon),
+                                monat=monat_int
                             )
                         )
+            z=1
             while len(return_list)<9:
                 return_list.append(
                     class_termin(
@@ -376,10 +381,11 @@ def quary_termine_monat(monat_int=int()):
                         bis=None,
                         text=None,
                         fabe=None,
-                        tag=None,
+                        tag=z,
                         monat=None
                     )
                 )
+                z+=1
     except:
         print("quary_termine_monat")
     finally:
