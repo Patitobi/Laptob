@@ -70,26 +70,28 @@ class class_termin:
         self.fabe =fabe
         self.tag=tag
         self.monat=monat
-    ######################## 
-    # Hier gehts weiter!!! # 
-    ########################        
+       
 class display_monate:
     def __init__(self):
         self.frame_list=list()
         self.termine_list=list()
         self.button_list=list()
-        self.total_frame=tk.Frame(root)
-        #self.func_button_list=list()
-        
-        #for i in range(12):
-        #    self.func_button_list.append(self.display_save(i))
-        #self.experi=self.display_save(1)
+        self.total_frame=None
+        self.button_creat_bool=False
         
         self.display_lode()
         
     def display_lode(self):
         
         for monat in range(12):
+            if len(self.frame_list)<12:
+                self.frame_list.append(None)
+   
+            if self.total_frame == None:
+                self.total_frame=tk.Frame(root)
+            elif self.total_frame!=None and monat==0:
+                self.total_frame=None
+                self.total_frame=tk.Frame(root)
             frame = tk.LabelFrame(self.total_frame)
             top_frame=tk.Frame(frame, relief="solid", borderwidth=2)
             
@@ -110,11 +112,9 @@ class display_monate:
                 termine_show.grid(column=0, row=x)
                 termine_show_num.grid(column=1, row=x)
                 z+=1
-                
-            #self.button_list.append(tk.Button(frame ,text="Anzeigen", command=lambda:[tag_display.display_active(monat=monat), self.display_none()]))
-            
-            
+
             self.button_creat(monat, frame)
+            
             
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
@@ -124,118 +124,98 @@ class display_monate:
             anz_termine.grid(column=0, row=1)
             anz_termine_num.grid(column=1, row=1)
             
-            self.frame_list.append(frame)
-
+            self.frame_list[monat]=frame
+            self.button_list[monat].grid(column=0, row=15, columnspan=2)  
+            
         x=1
         y=0
-        z=-1
         for frame in self.frame_list:
             frame.grid(column=x, row=y, padx=20, pady=20)
             if x%4==0 and x!=1:
                 y+=1
                 x=0
+                
             x+=1
-            z+=1
-            
-            self.button_list[z].grid(column=0, row=11, columnspan=2)        
+                  
             
         
     def button_creat(self, monat, frame):
+        if len(self.button_list)==0 or self.button_list[11]==None:
+            if not self.button_creat_bool:
+                for x in range(12):
+                    self.button_list.append(None)
+            self.button_creat_bool=True
             if monat==0:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=0)]
-                    )
                 )
             elif monat==1:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=1)]
-                    )
                 )
             elif monat==2:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=2)]
-                    )
                 )
             elif monat==3:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=3)]
-                    )
                 )
             elif monat==4:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
-                    )
                 )
             elif monat==5:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=5)]
-                    )
                 )
             elif monat==6:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=6)]
-                    )
                 )
             elif monat==7:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=7)]
-                    )
                 )
             elif monat==8:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=8)]
-                    )
                 )
             elif monat==9:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=9)]
-                    )
                 )
             elif monat==10:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=10)]
-                    )
                 )
             elif monat==11:
-                self.button_list.append(
-                tk.Button(
+                self.button_list[monat]=tk.Button(
                     frame,
                     text="Ansehen",
                     command=lambda:[self.display_none(), tag_display.display_active(monat=11)]
-                    )
                 )
         
     def dislpay_active(self):
@@ -245,11 +225,12 @@ class display_monate:
 
     def display_none(self):
         self.total_frame.pack_forget()
-       
+    ######################## 
+    # Hier gehts weiter!!! # 
+    ######################## 
 class display_tag:
     
     def __init__(self):
-        
         self.frame_list=list()
         self.active_display=int()
         
@@ -258,6 +239,8 @@ class display_tag:
         
     def display_lode(self): 
         for monat in range(12):
+                if len(self.frame_list)<12:
+                    self.frame_list.append(None)
                 monat_frame=tk.Frame(root)
                 
                 wochentag=quary_json_data(liste_monate=(monat, "anfangs_tag"))
@@ -299,18 +282,90 @@ class display_tag:
                         tag_y=0
                         tag_x+=1
                         
-                self.frame_list.append(monat_frame)
+                self.frame_list[monat]=monat_frame
                 
                 back=tk.Button(monat_frame,text="Zurück", command=lambda:[self.display_none(), monat_display.dislpay_active()])
                 back.grid(row=10, column=0)
+                termin_but=tk.Button(monat_frame, text="Neuer Termin", command=lambda:[self.display_none(), termin_new.display_active()])
+                termin_but.grid(row=10, column=1)
+                
+    def display_active(self, monat=None):
+        if monat==None:
+            self.frame_list[self.active_display].pack()
+        else:
+            self.active_display=int(monat)
+            self.frame_list[monat].pack()
+    
+    def display_none(self): 
+        self.frame_list[self.active_display].pack_forget()
         
-    def display_active(self, monat=int()):
-        self.active_display=monat
-        self.frame_list[monat].pack()
+class new_termin:
+    
+    def __init__(self):
+        self.monat=None
+        self.frame=None
+        
+        self.display_lode()
+    
+    def display_lode(self):
+        self.frame=tk.Frame(root)
+        
+        tag_text=tk.Label(self.frame, text="Tag:")
+        self.tag_entry=tk.Entry(self.frame)
+        tag_text.grid(row=1, column=0)
+        self.tag_entry.grid(row=1, column=1)
+        
+        name_text=tk.Label(self.frame, text="Name:")
+        self.name_entry=tk.Entry(self.frame)
+        name_text.grid(row=2, column=0)
+        self.name_entry.grid(row=2, column=1)
+        
+        von_text=tk.Label(self.frame, text="Von:")
+        self.von_entry=tk.Entry(self.frame)
+        von_text.grid(row=3, column=0)
+        self.von_entry.grid(row=3, column=1)
+        
+        bis_text=tk.Label(self.frame, text="Bis:")
+        self.bis_entry=tk.Entry(self.frame)
+        bis_text.grid(row=4, column=0)
+        self.bis_entry.grid(row=4, column=1)
+        
+        info_text=tk.Label(self.frame, text="Info")
+        self.info_entry=tk.Entry(self.frame)
+        info_text.grid(row=5, column=0)
+        self.info_entry.grid(row=5, column=1)
+        
+        save=tk.Button(self.frame, text="Speichern", command=lambda:self.creat_termin())
+        save.grid(row=6, column=1)
+        
+        back=tk.Button(self.frame, text="Zurück", command=lambda:[self.display_none(), tag_display.display_active(monat=None)])
+        back.grid(row=6, column=0)
+    
+    
+    def display_active(self):
+        self.frame.pack()
     
     def display_none(self):
-        self.frame_list[self.active_display].pack_forget()
-                              
+        self.frame.pack_forget()
+    
+    def creat_termin(self):
+        
+        append_termin(
+            monat=tag_display.active_display,
+            tag=self.tag_entry.get(),
+            name=self.name_entry.get(),
+            von=self.von_entry.get(),
+            bis=self.bis_entry.get(),
+            text=self.info_entry.get(),
+            fabe=None
+        )
+        
+        monat_display.display_lode()
+        tag_display.display_lode()
+        
+        self.display_none()
+        tag_display.display_active(monat=None)
+
 def anz_termine_monat(monat=int()):
     anz_termine=0
     with open("JSON/termine_data.json", "r") as data_file:
@@ -319,6 +374,7 @@ def anz_termine_monat(monat=int()):
         if data_monat.get(str(monat)) > 0:
             anz_termine=data_monat.get(str(monat))
     return anz_termine   
+        
         
 # such nach terminen an einem tag und gib diese in einem objeckt wieder
 def quary_termine_tag(monat=int(), tag=int()):
@@ -477,6 +533,7 @@ if __name__=="__main__":
         
         tag_display = display_tag()
         monat_display=display_monate()
+        termin_new=new_termin()
         
         monat_display.dislpay_active()
         
