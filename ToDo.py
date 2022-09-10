@@ -59,7 +59,7 @@ class class_tag:
         self.jahrestag=jahrestag
         self.termin_anzahl=None
         self.monat=monat
-        self.termin_list=quary_termine(monat=self.monat, tag=self.stelle)
+        self.termin_list=quary_termine_tag(monat=self.monat, tag=self.stelle)
             
 class class_termin:
     def __init__(self, name, id, von, bis, text, fabe, tag, monat):
@@ -99,8 +99,10 @@ class display_monate:
             anz_termine=tk.Label(frame, text="Anzahl Termine:")
             anz_termine_num=tk.Label(frame, text=ref_jahr.give_monat_ref(monat).give_anz_termine())
             
+            termine_monat=quary_termine_monat(monat_int=monat)
+            
             for x in range(2, 11):
-                termine_show=tk.Label(frame, text="xxx")
+                termine_show=tk.Label(frame, text=termine_monat.name)
                 termine_show_num=tk.Label(frame, text=f"{x-1}.")
                 
                 self.termine_list.append((termine_show, termine_show_num))
@@ -273,9 +275,9 @@ class display_tag:
                     datum.grid(column=2, row=0)
                     
                     x=1
-                    if len(quary_termine(monat=monat, tag=loop_tag))>0:
+                    if len(quary_termine_tag(monat=monat, tag=loop_tag))>0:
                         
-                        for termin in quary_termine(monat=monat, tag=loop_tag):
+                        for termin in quary_termine_tag(monat=monat, tag=loop_tag):
                             
                             termin_name=tk.Label(tag_frame, text=termin.name)
                             termin_von=tk.Label(tag_frame, text=termin.von_bis[0])
@@ -318,7 +320,7 @@ def anz_termine_monat(monat=int()):
     return anz_termine   
         
 # such nach terminen an einem tag und gib diese in einem objeckt wieder
-def quary_termine(monat=int(), tag=int()):
+def quary_termine_tag(monat=int(), tag=int()):
     termine_list=list()
     try:
         with open("JSON/termine_data.json", "r") as data_file:
@@ -340,10 +342,49 @@ def quary_termine(monat=int(), tag=int()):
                         monat=monat
                         ))
     except:
-        print("datei eror: termine_data.json")
+        print("quary_termine_tag")
     finally:
         return termine_list
       
+def quary_termine_monat(monat_int=int()):
+    return_list=list()
+    try:
+        with open("JSON/termine_data.json", "r") as data_file:
+            data = json.load(data_file)
+            monat=data.get(str(monat_int))
+            for key in monat.keys():
+                if len(monat.get(key).keys())>0:
+                    for termine in monat.get(key).keys():
+                        return_list.append(
+                            class_termin(
+                                name=termine.get("name"),
+                                id=termine.get("id"),
+                                von=termine.get("von"),
+                                bis=termine.get("bis"),
+                                text=termine.get("text"),
+                                fabe=termine.get("fabe"),
+                                tag=int(key),
+                                monat=monat
+                            )
+                        )
+            while len(return_list)<9:
+                return_list.append(
+                    class_termin(
+                        name="xxx",
+                        id=None,
+                        von=None,
+                        bis=None,
+                        text=None,
+                        fabe=None,
+                        tag=None,
+                        monat=None
+                    )
+                )
+    except:
+        print("quary_termine_monat")
+    finally:
+        return return_list
+                    
 # sucht nach daten zum kalender
 #jahr für infos zum ganzen jahr#
 #liste_tag_namen macht aus 1-7 namen wie Montag
@@ -379,7 +420,7 @@ def quary_json_data(jahr=None, liste_tag_namen=None, liste_monate=None):
                     else:
                         return result_3
     except:
-        print("ToDO\JSON\Termine_data.json kommte nicht geöfnet werden")
+        print("quary_json_data")
     finally:
         if ero != None:
             print(ero)
