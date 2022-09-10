@@ -107,8 +107,11 @@ class display_monate:
                 
                 termine_show.grid(column=0, row=x)
                 termine_show_num.grid(column=1, row=x)
+                
+            self.button_list.append(tk.Button(frame ,text="Anzeigen", command=lambda:[tag_display.display_active(monat=monat), self.display_none()]))
             
-            self.button_creat(monat, frame)
+            
+            #self.button_creat(monat, frame)
             
             monats_name.grid(column=0, row=0)
             monats_num.grid(column=1, row=0)
@@ -130,8 +133,9 @@ class display_monate:
                 x=0
             x+=1
             z+=1
-                
-            self.button_list[z].grid(column=0, row=11, columnspan=2)
+            
+            self.button_list[z].grid(column=0, row=11, columnspan=2)        
+            
         
     def button_creat(self, monat, frame):
             if monat==0:
