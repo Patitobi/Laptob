@@ -165,37 +165,37 @@ class display_monate:
                 self.button_list[5]=tk.Button(
                     self.frame_list[5],
                     text="Ansehen",
-                    command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
+                    command=lambda:[self.display_none(), tag_display.display_active(monat=5)]
                 )
                 self.button_list[6]=tk.Button(
                     self.frame_list[6],
                     text="Ansehen",
-                    command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
+                    command=lambda:[self.display_none(), tag_display.display_active(monat=6)]
                 )
                 self.button_list[7]=tk.Button(
                     self.frame_list[7],
                     text="Ansehen",
-                    command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
+                    command=lambda:[self.display_none(), tag_display.display_active(monat=7)]
                 )
                 self.button_list[8]=tk.Button(
                     self.frame_list[8],
                     text="Ansehen",
-                    command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
+                    command=lambda:[self.display_none(), tag_display.display_active(monat=8)]
                 )
                 self.button_list[9]=tk.Button(
                     self.frame_list[9],
                     text="Ansehen",
-                    command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
+                    command=lambda:[self.display_none(), tag_display.display_active(monat=9)]
                 )
                 self.button_list[10]=tk.Button(
                     self.frame_list[10],
                     text="Ansehen",
-                    command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
+                    command=lambda:[self.display_none(), tag_display.display_active(monat=10)]
                 )
                 self.button_list[11]=tk.Button(
                     self.frame_list[11],
                     text="Ansehen",
-                    command=lambda:[self.display_none(), tag_display.display_active(monat=4)]
+                    command=lambda:[self.display_none(), tag_display.display_active(monat=11)]
                 )
                 for x in range(12):
                     self.button_list[x].grid(column=0, row=15, columnspan=2)
